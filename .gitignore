@@ -18,6 +18,8 @@ msg/*Result.msg
 msg/_*.py
 build_isolated/
 devel_isolated/
+rosbags/
+CMakeLists.txt
 
 
 # Ignore generated docs
