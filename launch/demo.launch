@@ -2,7 +2,7 @@
 
 <launch>
   <!-- LOW INTENSITY MAP -->
-  <node pkg="mlim" type="mlim_node" name="ptg1" output="screen" >
+  <node pkg="mim" type="mim_node" name="ptg1" output="screen" >
     <!-- center position xy -->
     <param name="position_x" value="0"/>
     <param name="position_y" value="0"/>
@@ -26,7 +26,7 @@
   </node>
 
   <!-- MID INTENSITY MAP -->
-  <node pkg="mlim" type="mlim_node" name="ptg2" output="screen" >
+  <node pkg="mim" type="mim_node" name="ptg2" output="screen" >
     <!-- center position xy -->
     <param name="position_x" value="0"/>
     <param name="position_y" value="0"/>
@@ -50,7 +50,7 @@
   </node>
 
   <!-- HIGH INTENSITY MAP -->
-  <node pkg="mlim" type="mlim_node" name="ptg3" output="screen" >
+  <node pkg="mim" type="mim_node" name="ptg3" output="screen" >
     <!-- center position xy -->
     <param name="position_x" value="0"/>
     <param name="position_y" value="0"/>

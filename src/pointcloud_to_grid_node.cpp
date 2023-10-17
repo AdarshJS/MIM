@@ -7,7 +7,7 @@
 #include <pcl/conversions.h>
 #include <pcl_ros/point_cloud.h>
 #include <pointcloud_to_grid/pointcloud_to_grid_core.hpp>
-#include <mlim/MyParamsConfig.h>
+#include <mim/MyParamsConfig.h>
 #include <dynamic_reconfigure/server.h>
 
 nav_msgs::OccupancyGridPtr intensity_grid(new nav_msgs::OccupancyGrid);
