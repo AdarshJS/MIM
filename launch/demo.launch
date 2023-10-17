@@ -1,23 +1,77 @@
 
 
 <launch>
-  <node pkg="pointcloud_to_grid" type="pointcloud_to_grid_node" name="ptg" output="screen" >
+  <!-- LOW INTENSITY MAP -->
+  <node pkg="mlim" type="mlim_node" name="ptg1" output="screen" >
     <!-- center position xy -->
-    <param name="position_x" value="-5"/>
+    <param name="position_x" value="0"/>
     <param name="position_y" value="0"/>
     <!-- size of a grid cell -->
-    <param name="cell_size" value="1"/>
-    <param name="length_x" value="50"/>
-    <param name="length_y" value="100"/>
-    <!--
-    <param name="cloud_in_topic" value="/os_cloud_node/points"/>
-    -->
-    <param name="cloud_in_topic" value="/left_os1/os1_cloud_node/points"/>
+    <param name="cell_size" value="0.05"/>
+    <param name="length_x" value="10"/>
+    <param name="length_y" value="10"/>
+    <param name="intensity_factor" value="100"/>
+    <param name="height_factor" value="100"/>
+    
+    <param name="cloud_in_topic" value="/velodyne_points"/>
     <!--
     <param name="frame_out" value="os1_sensor"/>
     -->
-    <param name="mapi_topic_name" value="lidargrid_i"/>
-    <param name="maph_topic_name" value="lidargrid_h"/>
+    <param name="mapi_topic_name" value="intensity_map_low"/>
+    <param name="maph_topic_name" value="height_map_low"/>
+
+    <param name="lower_height_thresh" value="-0.15"/>
+    <param name="upper_height_thresh" value="-0.10"/>
+
   </node>
-  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconf" output="screen" />
+
+  <!-- MID INTENSITY MAP -->
+  <node pkg="mlim" type="mlim_node" name="ptg2" output="screen" >
+    <!-- center position xy -->
+    <param name="position_x" value="0"/>
+    <param name="position_y" value="0"/>
+    <!-- size of a grid cell -->
+    <param name="cell_size" value="0.05"/>
+    <param name="length_x" value="10"/>
+    <param name="length_y" value="10"/>
+    <param name="intensity_factor" value="100"/>
+    <param name="height_factor" value="100"/>
+    
+    <param name="cloud_in_topic" value="/velodyne_points"/>
+    <!--
+    <param name="frame_out" value="os1_sensor"/>
+    -->
+    <param name="mapi_topic_name" value="intensity_map_mid"/>
+    <param name="maph_topic_name" value="height_map_mid"/>
+
+    <param name="lower_height_thresh" value="-0.1"/>
+    <param name="upper_height_thresh" value="0.1"/>
+
+  </node>
+
+  <!-- HIGH INTENSITY MAP -->
+  <node pkg="mlim" type="mlim_node" name="ptg3" output="screen" >
+    <!-- center position xy -->
+    <param name="position_x" value="0"/>
+    <param name="position_y" value="0"/>
+    <!-- size of a grid cell -->
+    <param name="cell_size" value="0.05"/>
+    <param name="length_x" value="10"/>
+    <param name="length_y" value="10"/>
+    <param name="intensity_factor" value="100"/>
+    <param name="height_factor" value="100"/>
+    
+    <param name="cloud_in_topic" value="/velodyne_points"/>
+    <!--
+    <param name="frame_out" value="os1_sensor"/>
+    -->
+    <param name="mapi_topic_name" value="intensity_map_high"/>
+    <param name="maph_topic_name" value="height_map_high"/>
+
+    <param name="lower_height_thresh" value="0.1"/>
+    <param name="upper_height_thresh" value="0.15"/>
+
+  </node>
+
+  <!-- <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconf" output="screen" /> -->
 </launch>

@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+# include <iostream>
 #include <nav_msgs/OccupancyGrid.h>
 #include <sensor_msgs/PointCloud.h>
 #include <sensor_msgs/PointCloud2.h>
@@ -6,7 +7,7 @@
 #include <pcl/conversions.h>
 #include <pcl_ros/point_cloud.h>
 #include <pointcloud_to_grid/pointcloud_to_grid_core.hpp>
-#include <pointcloud_to_grid/MyParamsConfig.h>
+#include <mlim/MyParamsConfig.h>
 #include <dynamic_reconfigure/server.h>
 
 nav_msgs::OccupancyGridPtr intensity_grid(new nav_msgs::OccupancyGrid);
@@ -14,6 +15,9 @@ nav_msgs::OccupancyGridPtr height_grid(new nav_msgs::OccupancyGrid);
 GridMap grid_map;
 ros::Publisher pub_igrid, pub_hgrid;
 ros::Subscriber sub_pc2;
+using namespace std;
+
+double h_lower, h_upper;
 
 PointXY getIndex(double x, double y){
   PointXY ret;
@@ -40,6 +44,14 @@ void paramsCallback(my_dyn_rec::MyParamsConfig &config, uint32_t level)
   grid_map.initGrid(intensity_grid);
   grid_map.initGrid(height_grid);
   grid_map.paramRefresh();
+
+  h_lower = config.lower_height_thresh;
+  h_upper = config.upper_height_thresh;
+
+  printf("Lower z threshold = %f \n", h_lower);
+  printf("Upper z threshold = %f \n", h_upper);
+  // cout << "Lower z threshold = " << h_lower << endl;
+  // cout << "Upper z threshold = " << h_upper << endl;
 }
 
 
@@ -59,8 +71,9 @@ void pointcloudCallback(const pcl::PCLPointCloud2 &msg)
   for (auto& p : hpoints){p = -128;}
   for (auto& p : ipoints){p = -128;}
   //for (int i = 0; i < out_cloud.points.size(); ++i) // out_cloud.points[i].x instead of out_point.x
+
   for (auto out_point : out_cloud)
-  {
+  { if (out_point.z >= h_lower && out_point.z <= h_upper){
     if (out_point.x > 0.01 || out_point.x < -0.01){
       if (out_point.x > grid_map.bottomright_x && out_point.x < grid_map.topleft_x)
       {
@@ -77,6 +90,7 @@ void pointcloudCallback(const pcl::PCLPointCloud2 &msg)
         }
       }
     }
+   }
   }
   intensity_grid->header.stamp = ros::Time::now();
   intensity_grid->header.frame_id = msg.header.frame_id; // TODO
