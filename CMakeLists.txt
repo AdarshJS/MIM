@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0.2)
 project(mim)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++03 -Ofast) # for Dell Laptop
-add_compile_options(-std=c++2a -Ofast) # for NUC
+add_compile_options(-std=c++03 -Ofast) # for Dell Laptop
+# add_compile_options(-std=c++2a -Ofast) # for NUC
 
 
 ## Find catkin macros and libraries
